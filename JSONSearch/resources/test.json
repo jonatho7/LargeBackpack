@@ -1,0 +1,21 @@
+{
+    "rotate": [
+        {
+            "rotate": {
+                "creation_time": "2014-05-27 15:31:31",
+                "rotate": "fake"
+            }
+        },
+        {
+            "rotate": [
+                {
+                    "rotate": "Core Media Data Handler"
+                },
+                {
+                    "rotate": 300,
+                    "rotate2": 200
+                }
+            ]
+        }
+    ]
+}

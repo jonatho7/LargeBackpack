@@ -1,0 +1,25 @@
+{
+    "mixedDrink": [
+        {
+            "tequila sunrise": 70
+        },
+        {
+            "rum punch": 60
+        }
+    ],
+    "beer": [
+        {
+            "Michelob": [
+                {
+                    "Watery": 10,
+                    "Original": 60,
+                    "Ultra": 70
+                }
+            ],
+            "Coors Light" : 80
+        },
+        {
+            "Heineken": 5
+        }
+    ]
+}
