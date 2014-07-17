@@ -1,5 +1,3 @@
-package tests;
-
 public class TestCastingANullValue {
     public static void main(String[] args) {
         //Casting null to any Object type does not cause a null pointer exception.

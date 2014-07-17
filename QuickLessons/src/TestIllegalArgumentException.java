@@ -1,5 +1,3 @@
-package tests;
-
 public class TestIllegalArgumentException {
     public static void main(String[] args) {
         System.out.println("Hello");
