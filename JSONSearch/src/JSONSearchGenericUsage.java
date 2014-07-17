@@ -6,16 +6,17 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class JSONSearchUsage {
+public class JSONSearchGenericUsage {
     public static void main(String[] args) throws IOException {
         //Create the JSON object.
-        String content = readFile("resources/test.json", StandardCharsets.UTF_8);
+        String content = readFile("resources/test3.json", StandardCharsets.UTF_8);
         JSONObject originalJSON = new JSONObject(content);
 
         //Search in the JSON object.
-        Integer rotate = JSONSearch.searchForInteger(originalJSON, "rotate");
+        Integer rotate = (Integer) JSONSearchGeneric.searchForObject(originalJSON, "rotate", Integer.class);
         System.out.println("rotate = " + rotate);
-
+        String profile = (String) JSONSearchGeneric.searchForObject(originalJSON, "profile", String.class);
+        System.out.println("profile = " + profile);
     }
 
     /**
