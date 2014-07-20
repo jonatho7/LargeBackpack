@@ -1,0 +1,6 @@
+{
+    "rotate": {
+        20
+    }
+}
+//This is not a valid JSON object. Need to have a name before 20.

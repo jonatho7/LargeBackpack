@@ -1,0 +1,9 @@
+
+JSONObjects do not have names.
+
+JSONArrays can break down into many different things:
+
+
+How do JSONArrays break down into JSONArrays?
+
+Need to test out the toJSONArray and toString methods.

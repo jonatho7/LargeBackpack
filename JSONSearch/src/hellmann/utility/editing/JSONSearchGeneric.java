@@ -1,12 +1,31 @@
+package hellmann.utility.editing;
+
+import hellmann.utility.JSONsearch.JSONSearch;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class JSONSearchGeneric {
 
+    public static JSONObject searchForJSONObject(JSONObject json, String name){
+
+
+        return null;
+    }
+
+    public static Integer searchForInteger(JSONObject json, String name){
+        Integer value = (Integer) searchForStringOrInteger(json, name, Integer.class);
+        return value;
+    }
+
+    public static String searchForString(JSONObject json, String name){
+        String value = (String) searchForStringOrInteger(json, name, String.class);
+        return value;
+    }
 
     //Works for Integer and String so far.
     //TODO. Make this work for searching for JSONObject and JSONArrays too would be pretty cool.
-    public static Object searchForObject(Object obj, String requestedName, Class classObject) {
+    //JSONArrays break down into many different things. Am starting to incorporate this.
+    private static Object searchForStringOrInteger(Object obj, String requestedName, Class classObject) {
         if (obj == null) {
             return null;
         } else if (obj.getClass() == JSONArray.class) {
@@ -14,7 +33,7 @@ public class JSONSearchGeneric {
             JSONArray jsonArray = (JSONArray) obj;
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject tempObj = jsonArray.getJSONObject(i);
-                Object temp = searchForObject(tempObj, requestedName, classObject);
+                Object temp = searchForStringOrInteger(tempObj, requestedName, classObject);
                 if (temp != null) {
                     return temp;
                 }
@@ -28,13 +47,13 @@ public class JSONSearchGeneric {
                 Object tempObject = json.get(names[i]);
                 if (tempObject.getClass() == JSONArray.class) {
                     //Then break down the array.
-                    Object temp = searchForObject(tempObject, requestedName, classObject);
+                    Object temp = searchForStringOrInteger(tempObject, requestedName, classObject);
                     if (temp != null) {
                         return temp;
                     }
                 } else if (tempObject.getClass() == JSONObject.class) {
                     //Then break down the object.
-                    Object temp = searchForObject(tempObject, requestedName, classObject);
+                    Object temp = searchForStringOrInteger(tempObject, requestedName, classObject);
                     if (temp != null) {
                         return temp;
                     }
@@ -53,6 +72,7 @@ public class JSONSearchGeneric {
                             String myString = null;
                             try {
                                 myString = json.getString(names[i]);
+                                //TODO. Did not use optString because this returns an empty String.
                             } catch (Exception e) {
                                 ;
                             }
@@ -70,4 +90,5 @@ public class JSONSearchGeneric {
         //No results found. Return null.
         return null;
     }
+
 }

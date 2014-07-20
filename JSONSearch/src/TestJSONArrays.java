@@ -1,3 +1,4 @@
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -6,15 +7,15 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class JSONSearchUsage {
+public class TestJSONArrays {
     public static void main(String[] args) throws IOException {
         //Create the JSON object.
-        String content = readFile("resources/test.json", StandardCharsets.UTF_8);
+        String content = readFile("resources/test6.json", StandardCharsets.UTF_8);
         JSONObject originalJSON = new JSONObject(content);
+        JSONArray rotateJSON = originalJSON.getJSONArray("rotate");
 
-        //Search in the JSON object.
-        Integer rotate = JSONSearch.searchForInteger(originalJSON, "rotate");
-        System.out.println("rotate = " + rotate);
+        //Attempt to get a JSONArray from a JSONArray. This attempt fails.
+        JSONArray mineArray = rotateJSON.getJSONArray(0);
 
     }
 
