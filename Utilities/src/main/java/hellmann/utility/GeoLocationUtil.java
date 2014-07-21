@@ -55,15 +55,15 @@ public class GeoLocationUtil {
     private static GeoPoint parseGeoLocationString(String locationString) {
         String myRegularExpression = "(\\+|\\-|/)";
         String[] tempValues = locationString.split(myRegularExpression);
-        String[] values = removeNulls(tempValues);
-        if(values.length < 2){
+        String[] values = removeNullsFromStringArray(tempValues);
+        if (values.length < 2) {
             return null;
         }
 
         String latitudeValue = values[0];
         String latitudeSign = "";
         int indexOfLatitude = locationString.indexOf(latitudeValue);
-        if (indexOfLatitude != 0 ){
+        if (indexOfLatitude != 0) {
             latitudeSign = locationString.substring(0, 1);
         }
         String latitudeString = latitudeSign + latitudeValue;
@@ -71,9 +71,9 @@ public class GeoLocationUtil {
 
         String longitudeValue = values[1];
         String longitudeSign = "";
-        int indexOfLongitude = locationString.indexOf(longitudeValue, indexOfLatitude + latitudeValue.length() );
+        int indexOfLongitude = locationString.indexOf(longitudeValue, indexOfLatitude + latitudeValue.length());
         String longitudePreviousChar = locationString.substring(indexOfLongitude - 1, indexOfLongitude);
-        if (longitudePreviousChar.equals("-") || longitudePreviousChar.equals("+") ){
+        if (longitudePreviousChar.equals("-") || longitudePreviousChar.equals("+")) {
             longitudeSign = longitudePreviousChar;
         }
         String longitudeString = longitudeSign + longitudeValue;
@@ -81,12 +81,12 @@ public class GeoLocationUtil {
 
         String altitudeValue = null;
         Double altitude = null;
-        if (values.length == 3){
+        if (values.length == 3) {
             altitudeValue = values[2];
             String altitudeSign = "";
-            int indexOfAltitude = locationString.indexOf(altitudeValue, indexOfLongitude + longitudeValue.length() );
+            int indexOfAltitude = locationString.indexOf(altitudeValue, indexOfLongitude + longitudeValue.length());
             String altitudePreviousChar = locationString.substring(indexOfAltitude - 1, indexOfAltitude);
-            if(altitudePreviousChar.equals("-") || altitudePreviousChar.equals("+")){
+            if (altitudePreviousChar.equals("-") || altitudePreviousChar.equals("+")) {
                 altitudeSign = altitudePreviousChar;
             }
             String altitudeString = altitudeSign + altitudeValue;

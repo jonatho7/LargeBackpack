@@ -19,5 +19,5 @@
             <version>${securegraph.version}</version>
         </dependency>
     </dependencies>
-    
+
 </project>

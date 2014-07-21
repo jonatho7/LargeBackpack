@@ -99,7 +99,7 @@ public class JSONSearch {
                                 //Then the value was valid. Return results.
                                 return rotate.intValue();
                             }
-                        } else if (classObject == String.class){
+                        } else if (classObject == String.class) {
                             String myString = null;
                             try {
                                 myString = json.getString(names[i]);
@@ -107,7 +107,7 @@ public class JSONSearch {
                             } catch (Exception e) {
                                 ;
                             }
-                            if (myString != null){
+                            if (myString != null) {
                                 return myString;
                             }
 

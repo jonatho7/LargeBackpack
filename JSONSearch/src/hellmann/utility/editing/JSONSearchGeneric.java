@@ -84,7 +84,7 @@ public class JSONSearchGeneric {
             if (requestedName.equals(objectToReduceName) && objectToReduceValue.getClass() == requestedObjectType) {
                 return objectToReduceValue;
             }
-        } else if (objectToReduceValue.getClass() == JSONString.class){
+        } else if (objectToReduceValue.getClass() == JSONString.class) {
             //if (new Thingy() instanceof JSONString){
             //}
             //if (requestedObjectType instanceof JSONString){

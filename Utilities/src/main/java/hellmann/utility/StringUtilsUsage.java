@@ -9,10 +9,11 @@ public class StringUtilsUsage {
         ffmpegOptions.add("-y");
         ffmpegOptions.add("-i");
         ffmpegOptions.add("path goes here");
-        ffmpegOptions.add("-vcodec"); ffmpegOptions.add("libx264");
+        ffmpegOptions.add("-vcodec");
+        ffmpegOptions.add("libx264");
         ffmpegOptions.add("-vprofile");
         ffmpegOptions.add("high");
-        
+
         String[] mine = StringUtils.createStringArrayFromList(ffmpegOptions);
         System.out.println(Arrays.toString(mine));
     }

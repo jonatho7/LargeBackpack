@@ -9,11 +9,11 @@ public class TestCastingANullValue {
         int mine2 = myMethod2();
     }
 
-    public static Object myMethod(){
+    public static Object myMethod() {
         return null;
     }
 
-    public static Integer myMethod2(){
+    public static Integer myMethod2() {
         return null;
     }
 }

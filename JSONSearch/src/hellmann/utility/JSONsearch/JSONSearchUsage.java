@@ -1,6 +1,5 @@
 package hellmann.utility.JSONsearch;
 
-import hellmann.utility.JSONsearch.JSONSearch;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -24,8 +23,7 @@ public class JSONSearchUsage {
     /**
      * Creates a String from the contents of a file.
      */
-    public static String readFile(String path, Charset encoding) throws IOException
-    {
+    public static String readFile(String path, Charset encoding) throws IOException {
         byte[] encoded = Files.readAllBytes(Paths.get(path));
         return new String(encoded, encoding);
     }

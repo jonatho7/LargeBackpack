@@ -11,15 +11,15 @@ public class TestIllegalArgumentException {
         }
     }
 
-    public static Integer myMethod(Integer param){
-        if (param == null){
+    public static Integer myMethod(Integer param) {
+        if (param == null) {
             throw new IllegalArgumentException("The argument cannot be null");
         }
 
         return 5;
     }
 
-    public static void myMethod2(){
+    public static void myMethod2() {
         System.out.println("Feeling Fine.");
     }
 }
