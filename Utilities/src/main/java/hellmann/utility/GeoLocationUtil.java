@@ -109,7 +109,7 @@ public class GeoLocationUtil {
         }
     }
 
-    public static String[] removeNulls(String[] array) {
+    public static String[] removeNullsFromStringArray(String[] array) {
         ArrayList<String> arrayList = new ArrayList<String>();
         for (int i = 0; i < array.length; i++) {
             if (array[i] != null && !array[i].equals("")) {
