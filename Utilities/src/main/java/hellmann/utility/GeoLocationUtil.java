@@ -27,31 +27,6 @@ public class GeoLocationUtil {
         return null;
     }
 
-    private static GeoPoint parseGeoLocationStringUnsafe(String locationString) {
-        int index = 0;
-        int maxIndex = locationString.length() - 1;
-        String latitudeSign = locationString.substring(0, 1);
-        String latitudeString = locationString.substring(0, 8);
-        Double latitude = Double.parseDouble(latitudeString);
-        System.out.println(latitudeString);
-
-        String longitudeString = locationString.substring(8, 17);
-        Double longitude = Double.parseDouble(longitudeString);
-        System.out.println(longitudeString);
-
-        String altitudeString = locationString.substring(17, 25);
-        Double altitude = Double.parseDouble(altitudeString);
-        System.out.println(altitudeString);
-
-        if (latitude != null && longitude != null && altitude != null) {
-            return new GeoPoint(latitude, longitude, altitude);
-        } else if (latitude != null && longitude != null && altitude == null) {
-            return new GeoPoint(latitude, longitude);
-        } else {
-            return null;
-        }
-    }
-
     private static GeoPoint parseGeoLocationString(String locationString) {
         String myRegularExpression = "(\\+|\\-|/)";
         String[] tempValues = locationString.split(myRegularExpression);
@@ -92,6 +67,31 @@ public class GeoLocationUtil {
             String altitudeString = altitudeSign + altitudeValue;
             altitude = Double.parseDouble(altitudeString);
         }
+
+        if (latitude != null && longitude != null && altitude != null) {
+            return new GeoPoint(latitude, longitude, altitude);
+        } else if (latitude != null && longitude != null && altitude == null) {
+            return new GeoPoint(latitude, longitude);
+        } else {
+            return null;
+        }
+    }
+
+    private static GeoPoint parseGeoLocationStringUnsafe(String locationString) {
+        int index = 0;
+        int maxIndex = locationString.length() - 1;
+        String latitudeSign = locationString.substring(0, 1);
+        String latitudeString = locationString.substring(0, 8);
+        Double latitude = Double.parseDouble(latitudeString);
+        System.out.println(latitudeString);
+
+        String longitudeString = locationString.substring(8, 17);
+        Double longitude = Double.parseDouble(longitudeString);
+        System.out.println(longitudeString);
+
+        String altitudeString = locationString.substring(17, 25);
+        Double altitude = Double.parseDouble(altitudeString);
+        System.out.println(altitudeString);
 
         if (latitude != null && longitude != null && altitude != null) {
             return new GeoPoint(latitude, longitude, altitude);
