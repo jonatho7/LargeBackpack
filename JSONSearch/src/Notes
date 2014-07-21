@@ -1,9 +1,10 @@
 
-JSONObjects do not have names.
 
 JSONArrays can break down into many different things:
 
 
-How do JSONArrays break down into JSONArrays?
+How do JSONArrays break down into JSONArrays? Look at test7.json
+Anything within a JSONArray will not have a name.
+Everything within a JSONObject will have a name.
 
 Need to test out the toJSONArray and toString methods.

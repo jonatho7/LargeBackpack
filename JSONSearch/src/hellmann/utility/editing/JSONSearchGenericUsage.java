@@ -1,7 +1,5 @@
 package hellmann.utility.editing;
 
-import hellmann.utility.JSONsearch.JSONSearch;
-import hellmann.utility.editing.JSONSearchGeneric;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -13,12 +11,12 @@ import java.nio.file.Paths;
 public class JSONSearchGenericUsage {
     public static void main(String[] args) throws IOException {
         //Create the JSON object.
-        String content = readFile("resources/test3.json", StandardCharsets.UTF_8);
+        String content = readFile("resources/test7.json", StandardCharsets.UTF_8);
         JSONObject originalJSON = new JSONObject(content);
 
         //Search in the JSON object.
-        Integer rotation = JSONSearchGeneric.searchForInteger(originalJSON, "rotate");
-        System.out.println("rotation = " + rotation);
+        Integer rotate = JSONSearchGeneric.searchForInteger(originalJSON, "rotate");
+        System.out.println("rotate = " + rotate);
 
         String profile = (String) JSONSearchGeneric.searchForString(originalJSON, "profile");
         System.out.println("profile = " + profile);
@@ -27,8 +25,7 @@ public class JSONSearchGenericUsage {
     /**
      * Creates a String from the contents of a file.
      */
-    public static String readFile(String path, Charset encoding) throws IOException
-    {
+    public static String readFile(String path, Charset encoding) throws IOException {
         byte[] encoded = Files.readAllBytes(Paths.get(path));
         return new String(encoded, encoding);
     }

@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/JSONSearch/JSONSearch.iml" filepath="$PROJECT_DIR$/JSONSearch/JSONSearch.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JSONSearch/JSONSearchTests/JSONSearchTests.iml" filepath="$PROJECT_DIR$/JSONSearch/JSONSearchTests/JSONSearchTests.iml" />
       <module fileurl="file://$PROJECT_DIR$/LargeBackpack.iml" filepath="$PROJECT_DIR$/LargeBackpack.iml" />
       <module fileurl="file://$PROJECT_DIR$/QuickLessons/QuickLessons.iml" filepath="$PROJECT_DIR$/QuickLessons/QuickLessons.iml" />
       <module fileurl="file://$PROJECT_DIR$/Utilities/Utilities.iml" filepath="$PROJECT_DIR$/Utilities/Utilities.iml" />
