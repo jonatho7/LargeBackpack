@@ -6,7 +6,7 @@ public class TestCastingANullValue {
         System.out.println(mine);
 
         //Assigning an int to null causes a null pointer exception.
-        int mine2 = myMethod2();
+        //int mine2 = myMethod2();
     }
 
     public static Object myMethod() {
