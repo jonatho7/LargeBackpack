@@ -2,17 +2,21 @@ package hellmann.utility.editing;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.json.JSONString;
 
 public class JSONSearchGeneric {
+
+    public static JSONObject searchForJSONObject(JSONObject json, String name) {
+        JSONObject value = (JSONObject) recursiveSearch(null, json, name, JSONObject.class);
+        return value;
+    }
 
     public static JSONArray searchForJSONArray(JSONObject json, String name) {
         JSONArray value = (JSONArray) recursiveSearch(null, json, name, JSONArray.class);
         return value;
     }
 
-    public static Integer searchForInteger(JSONObject json, String name) {
-        Integer value = (Integer) recursiveSearch(null, json, name, Integer.class);
+    public static Boolean searchForBoolean(JSONObject json, String name) {
+        Boolean value = (Boolean) recursiveSearch(null, json, name, Boolean.class);
         return value;
     }
 
@@ -21,9 +25,57 @@ public class JSONSearchGeneric {
         return value;
     }
 
-    //Works for Integer and String so far.
-    //TODO. Make this work for searching for JSONObject and JSONArrays too would be pretty cool.
-    //JSONArrays break down into many different things. Am starting to incorporate this.
+
+    /**
+     * Search for a double value. Will return results for a double, long, or int value.
+     *
+     * @param json
+     * @param name
+     * @return
+     */
+    public static Double searchForDouble(JSONObject json, String name) {
+        Object value = recursiveSearch(null, json, name, Double.class);
+        if (value.getClass() == Double.class) {
+            return new Double((Double) value);
+        } else if (value.getClass() == Long.class) {
+            return new Double(((Long) value).doubleValue());
+        } else if (value.getClass() == Integer.class) {
+            return new Double(((Integer) value).doubleValue());
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Search for a long value. Will return results for a long or int value.
+     *
+     * @param json
+     * @param name
+     * @return
+     */
+    public static Long searchForLong(JSONObject json, String name) {
+        Object value = recursiveSearch(null, json, name, Long.class);
+        if (value.getClass() == Long.class) {
+            return new Long((Long) value);
+        } else if (value.getClass() == Integer.class) {
+            return new Long(((Integer) value).longValue());
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Search for an int value.
+     *
+     * @param json
+     * @param name
+     * @return
+     */
+    public static Integer searchForInteger(JSONObject json, String name) {
+        Integer value = (Integer) recursiveSearch(null, json, name, Integer.class);
+        return value;
+    }
+
     private static Object recursiveSearch(String objectToReduceName, Object objectToReduceValue, String requestedName, Class requestedObjectType) {
         if (objectToReduceValue == null) {
             return null;
@@ -33,7 +85,7 @@ public class JSONSearchGeneric {
                 //Then we have a JSONArray with the requested name and return type. return this.
                 return objectToReduceValue;
             }
-            //Otherwise, Break down the JSONArray into JSONObjects.
+            //Otherwise, Break down the JSONArray.
             JSONArray jsonArray = (JSONArray) objectToReduceValue;
             for (int i = 0; i < jsonArray.length(); i++) {
                 Object tempObject = jsonArray.get(i);
@@ -62,35 +114,48 @@ public class JSONSearchGeneric {
                 }
             }
         } else if (objectToReduceValue.getClass() == Double.class) {
-            if (requestedName.equals(objectToReduceName) && objectToReduceValue.getClass() == requestedObjectType) {
-                if (!Double.isNaN((Double) objectToReduceValue)) {
+            if (requestedObjectType == Double.class) {
+                if (requestedName.equals(objectToReduceName)) {
+                    //Check if objectToReduceValue is a valid double.
+                    if (!Double.isNaN((Double) objectToReduceValue)) {
+                        return objectToReduceValue;
+                    }
+                }
+            }
+        } else if (objectToReduceValue.getClass() == Long.class) {
+            if (requestedObjectType == Long.class ||
+                    requestedObjectType == Integer.class) {
+                if (requestedName.equals(objectToReduceName)) {
                     return objectToReduceValue;
                 }
             }
         } else if (objectToReduceValue.getClass() == Integer.class) {
-            //Then we have an Integer value for a name:value pair.
-            if (requestedName.equals(objectToReduceName) && objectToReduceValue.getClass() == requestedObjectType) {
-                return objectToReduceValue;
+            if (requestedObjectType == Integer.class ||
+                    requestedObjectType == Double.class ||
+                    requestedObjectType == Long.class) {
+                if (requestedName.equals(objectToReduceName)) {
+                    return objectToReduceValue;
+                }
             }
         } else if (objectToReduceValue.getClass() == String.class) {
-            if (requestedName.equals(objectToReduceName) && objectToReduceValue.getClass() == requestedObjectType) {
-                return objectToReduceValue;
+            if (requestedObjectType == String.class) {
+                if (requestedName.equals(objectToReduceName)) {
+                    return objectToReduceValue;
+                }
             }
         } else if (objectToReduceValue.getClass() == Boolean.class) {
-            if (requestedName.equals(objectToReduceName) && objectToReduceValue.getClass() == requestedObjectType) {
-                return objectToReduceValue;
+            if (requestedObjectType == Boolean.class) {
+                if (requestedName.equals(objectToReduceName)) {
+                    return objectToReduceValue;
+                }
             }
-        } else if (objectToReduceValue.getClass() == Long.class) {
-            if (requestedName.equals(objectToReduceName) && objectToReduceValue.getClass() == requestedObjectType) {
-                return objectToReduceValue;
-            }
-        } else if (objectToReduceValue.getClass() == JSONString.class) {
-            //if (new Thingy() instanceof JSONString){
-            //}
-            //if (requestedObjectType instanceof JSONString){
-            //
-            //}
-        }
+        } //else if (objectToReduceValue.getClass() "implements" JSONString.class) {
+        //if (new Thingy() instanceof JSONString){
+        //}
+        //if (requestedObjectType instanceof JSONString){
+        //
+        //}
+        //}
 
 
         //No results found. Return null.
