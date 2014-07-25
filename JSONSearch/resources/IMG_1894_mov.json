@@ -112,7 +112,8 @@
             "location": "+38.9216-077.2270+150.568/",
             "location-eng": "+38.9216-077.2270+150.568/",
             "model": "iPhone 5",
-            "model-eng": "iPhone 5"
+            "model-eng": "iPhone 5",
+            "simple": true
         }
     }
 }

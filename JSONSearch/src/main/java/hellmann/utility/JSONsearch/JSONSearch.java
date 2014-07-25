@@ -3,122 +3,177 @@ package hellmann.utility.JSONsearch;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 public class JSONSearch {
 
-    public static Integer searchForInteger(Object obj, String requestedName) {
-        if (obj == null) {
+    public static Boolean searchForBoolean(JSONObject json, String name) {
+        Boolean value = (Boolean) recursiveSearch(null, json, name, Boolean.class);
+        return value;
+    }
+
+    public static String searchForString(JSONObject json, String name) {
+        String value = (String) recursiveSearch(null, json, name, String.class);
+        return value;
+    }
+
+    /**
+     * Recursively search for a double value within all hierarchies of a JSONObject.
+     * Will return results for a double, long, or int value, not strictly just double values.
+     * Will return null if a result is not found.
+     *
+     * @param json The JSONObject to search within.
+     * @param name
+     * @return
+     */
+    public static Double searchForDouble(JSONObject json, String name) {
+        Object value = recursiveSearch(null, json, name, Double.class);
+        if (value != null) {
+            if (value.getClass() == Double.class) {
+                return new Double((Double) value);
+            } else if (value.getClass() == Long.class) {
+                return new Double(((Long) value).doubleValue());
+            } else if (value.getClass() == Integer.class) {
+                return new Double(((Integer) value).doubleValue());
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Search for a long value. Will return results for a long or int value.
+     *
+     * @param json
+     * @param name
+     * @return
+     */
+    public static Long searchForLong(JSONObject json, String name) {
+        Object value = recursiveSearch(null, json, name, Long.class);
+        if (value != null) {
+            if (value.getClass() == Long.class) {
+                return new Long((Long) value);
+            } else if (value.getClass() == Integer.class) {
+                return new Long(((Integer) value).longValue());
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Search for an int value.
+     *
+     * @param json
+     * @param name
+     * @return
+     */
+    public static Integer searchForInteger(JSONObject json, String name) {
+        Integer value = (Integer) recursiveSearch(null, json, name, Integer.class);
+        return value;
+    }
+
+    public static JSONObject searchForJSONObject(JSONObject json, String name) {
+        JSONObject value = (JSONObject) recursiveSearch(null, json, name, JSONObject.class);
+        return value;
+    }
+
+    public static JSONArray searchForJSONArray(JSONObject json, String name) {
+        JSONArray value = (JSONArray) recursiveSearch(null, json, name, JSONArray.class);
+        return value;
+    }
+
+    public static JSONArray searchForJSONArray(JSONObject json, Object[] values){
+
+
+        return null;
+    }
+
+    public static ArrayList<Object> searchForJSONArray(JSONObject json){
+        return null;
+    }
+
+    private static Object recursiveSearch(String objectToReduceName, Object objectToReduceValue, String requestedName, Class requestedObjectType) {
+        if (objectToReduceValue == null) {
             return null;
-        } else if (obj.getClass() == JSONArray.class) {
-            //Then we have a JSONArray. Break down the JSONArray into JSONObjects.
-            JSONArray jsonArray = (JSONArray) obj;
+        } else if (objectToReduceValue.getClass() == JSONArray.class) {
+            //Then we have a JSONArray. Is it one without a name?
+            if (requestedName == null){
+
+            }
+            //Then we have a JSONArray with a name. Is this what we wanted to return?
+            if (requestedName.equals(objectToReduceName) && objectToReduceValue.getClass() == requestedObjectType) {
+                //Then we have a JSONArray with the requested name and return type. return this.
+                return objectToReduceValue;
+            }
+            //Otherwise, Break down the JSONArray.
+            JSONArray jsonArray = (JSONArray) objectToReduceValue;
             for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject tempObj = jsonArray.getJSONObject(i);
-                Integer temp = searchForInteger(tempObj, requestedName);
-                if (temp != null) {
-                    return temp;
+                Object tempObject = jsonArray.get(i);
+                Object nullableValue = recursiveSearch(null, tempObject, requestedName, requestedObjectType);
+                if (nullableValue != null) {
+                    return nullableValue;
                 }
             }
-        } else if (obj.getClass() == JSONObject.class) {
-            //Then we have a JSONObject. Determine what the contents are.
-            JSONObject json = (JSONObject) obj;
-            String[] names = JSONObject.getNames(json);
-            for (int i = 0; i < names.length; i++) {
-                //Get whatever is inside the JSONObject.
-                Object tempObject = json.get(names[i]);
-                if (tempObject.getClass() == JSONArray.class) {
-                    //Then break down the array.
-                    Integer temp = searchForInteger(tempObject, requestedName);
-                    if (temp != null) {
-                        return temp;
+        } else if (objectToReduceValue.getClass() == JSONObject.class) {
+            //Then we have a JSONObject. Is this what we wanted to return?
+            if (requestedName.equals(objectToReduceName) && objectToReduceValue.getClass() == requestedObjectType) {
+                //Then we have a JSONObject with the requested name and return type. return this.
+                return objectToReduceValue;
+            }
+            //Otherwise, Break down the JSONObject.
+            JSONObject jsonObject = (JSONObject) objectToReduceValue;
+            JSONArray names = jsonObject.names();
+            JSONArray values = jsonObject.toJSONArray(names);
+            for (int i = 0; i < names.length(); i++) {
+                //Get whatever is inside the JSONObject, and call the search method again.
+                String name = (String) names.get(i);
+                Object value = values.get(i);
+                Object nullableValue = recursiveSearch(name, value, requestedName, requestedObjectType);
+                if (nullableValue != null) {
+                    return nullableValue;
+                }
+            }
+        } else if (objectToReduceValue.getClass() == Double.class) {
+            if (requestedObjectType == Double.class) {
+                if (requestedName.equals(objectToReduceName)) {
+                    //Check if objectToReduceValue is a valid double.
+                    if (!Double.isNaN((Double) objectToReduceValue)) {
+                        return objectToReduceValue;
                     }
-                } else if (tempObject.getClass() == JSONObject.class) {
-                    //Then break down the object.
-                    Integer temp = searchForInteger(tempObject, requestedName);
-                    if (temp != null) {
-                        return temp;
-                    }
-                } else {
-                    //Then the Object is neither a JSONArray or JSONObject. This means we have a value.
-                    if (requestedName.equals(names[i])) {
-                        //Then we have found the correct name: value pair. Get the value.
-                        Double rotate = json.optDouble(names[i]);
-                        if (!Double.isNaN(rotate)) {
-                            //Then the value was valid. Return results.
-                            return rotate.intValue();
-                        }
-                    }
+                }
+            }
+        } else if (objectToReduceValue.getClass() == Long.class) {
+            if (requestedObjectType == Long.class ||
+                    requestedObjectType == Integer.class) {
+                if (requestedName.equals(objectToReduceName)) {
+                    return objectToReduceValue;
+                }
+            }
+        } else if (objectToReduceValue.getClass() == Integer.class) {
+            if (requestedObjectType == Integer.class ||
+                    requestedObjectType == Double.class ||
+                    requestedObjectType == Long.class) {
+                if (requestedName.equals(objectToReduceName)) {
+                    return objectToReduceValue;
+                }
+            }
+        } else if (objectToReduceValue.getClass() == String.class) {
+            if (requestedObjectType == String.class) {
+                if (requestedName.equals(objectToReduceName)) {
+                    return objectToReduceValue;
+                }
+            }
+        } else if (objectToReduceValue.getClass() == Boolean.class) {
+            if (requestedObjectType == Boolean.class) {
+                if (requestedName.equals(objectToReduceName)) {
+                    return objectToReduceValue;
                 }
             }
         }
+
         //No results found. Return null.
         return null;
     }
 
-    //Works for Integer and String so far.
-    //TODO. Make this work for searching for JSONObject and JSONArrays too would be pretty cool.
-    public static Object searchForStringOrInteger(Object obj, String requestedName, Class classObject) {
-        if (obj == null) {
-            return null;
-        } else if (obj.getClass() == JSONArray.class) {
-            //Then we have a JSONArray. Break down the JSONArray into JSONObjects.
-            JSONArray jsonArray = (JSONArray) obj;
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject tempObj = jsonArray.getJSONObject(i);
-                Object temp = searchForStringOrInteger(tempObj, requestedName, classObject);
-                if (temp != null) {
-                    return temp;
-                }
-            }
-        } else if (obj.getClass() == JSONObject.class) {
-            //Then we have a JSONObject. Determine what the contents are.
-            JSONObject json = (JSONObject) obj;
-            String[] names = JSONObject.getNames(json);
-            for (int i = 0; i < names.length; i++) {
-                //Get whatever is inside the JSONObject.
-                Object tempObject = json.get(names[i]);
-                if (tempObject.getClass() == JSONArray.class) {
-                    //Then break down the array.
-                    Object temp = searchForStringOrInteger(tempObject, requestedName, classObject);
-                    if (temp != null) {
-                        return temp;
-                    }
-                } else if (tempObject.getClass() == JSONObject.class) {
-                    //Then break down the object.
-                    Object temp = searchForStringOrInteger(tempObject, requestedName, classObject);
-                    if (temp != null) {
-                        return temp;
-                    }
-                } else {
-                    //Then the Object is neither a JSONArray or JSONObject. This means we have a value.
-                    //Searching for an Integer value. Try to search for a different type of value.
-                    if (requestedName.equals(names[i])) {
-                        //Then we have found the correct name: value pair. Get the value if the correct class type.
-                        if (classObject == Integer.class) {
-                            Double rotate = json.optDouble(names[i]);
-                            if (!Double.isNaN(rotate)) {
-                                //Then the value was valid. Return results.
-                                return rotate.intValue();
-                            }
-                        } else if (classObject == String.class) {
-                            String myString = null;
-                            try {
-                                myString = json.getString(names[i]);
-                                //TODO. Did not use optString because this returns an empty String.
-                            } catch (Exception e) {
-                                ;
-                            }
-                            if (myString != null) {
-                                return myString;
-                            }
-
-                        }
-
-                    }
-
-                }
-            }
-        }
-        //No results found. Return null.
-        return null;
-    }
 }
