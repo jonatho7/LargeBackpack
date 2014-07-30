@@ -80,7 +80,7 @@
                 "attached_pic": 0
             },
             "tags": {
-                "rotate": "180",
+                "rotate": 180,
                 "creation_time": "2014-07-16 19:44:16",
                 "language": "und",
                 "handler_name": "Core Media Data Handler"

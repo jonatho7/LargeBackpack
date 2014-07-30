@@ -8,12 +8,12 @@ import java.util.ArrayList;
 public class JSONSearch {
 
     public static Boolean searchForBoolean(JSONObject json, String name) {
-        Boolean value = (Boolean) recursiveSearch(null, json, name, Boolean.class);
+        Boolean value = (Boolean) recursiveSearch(null, json, name, Boolean.class, null);
         return value;
     }
 
     public static String searchForString(JSONObject json, String name) {
-        String value = (String) recursiveSearch(null, json, name, String.class);
+        String value = (String) recursiveSearch(null, json, name, String.class, null);
         return value;
     }
 
@@ -27,7 +27,7 @@ public class JSONSearch {
      * @return
      */
     public static Double searchForDouble(JSONObject json, String name) {
-        Object value = recursiveSearch(null, json, name, Double.class);
+        Object value = recursiveSearch(null, json, name, Double.class, null);
         if (value != null) {
             if (value.getClass() == Double.class) {
                 return new Double((Double) value);
@@ -49,7 +49,7 @@ public class JSONSearch {
      * @return
      */
     public static Long searchForLong(JSONObject json, String name) {
-        Object value = recursiveSearch(null, json, name, Long.class);
+        Object value = recursiveSearch(null, json, name, Long.class, null);
         if (value != null) {
             if (value.getClass() == Long.class) {
                 return new Long((Long) value);
@@ -69,37 +69,47 @@ public class JSONSearch {
      * @return
      */
     public static Integer searchForInteger(JSONObject json, String name) {
-        Integer value = (Integer) recursiveSearch(null, json, name, Integer.class);
+        Integer value = (Integer) recursiveSearch(null, json, name, Integer.class, null);
         return value;
     }
 
     public static JSONObject searchForJSONObject(JSONObject json, String name) {
-        JSONObject value = (JSONObject) recursiveSearch(null, json, name, JSONObject.class);
+        JSONObject value = (JSONObject) recursiveSearch(null, json, name, JSONObject.class, null);
         return value;
     }
 
     public static JSONArray searchForJSONArray(JSONObject json, String name) {
-        JSONArray value = (JSONArray) recursiveSearch(null, json, name, JSONArray.class);
+        JSONArray value = (JSONArray) recursiveSearch(null, json, name, JSONArray.class, null);
         return value;
     }
 
     public static JSONArray searchForJSONArray(JSONObject json, Object[] values){
 
-
         return null;
     }
 
-    public static ArrayList<Object> searchForJSONArray(JSONObject json){
+    public static ArrayList<Object> searchForJSONArrays(JSONObject json){
+        ArrayList<Object> myList = new ArrayList<Object>();
+        recursiveSearch(null, json, null, JSONArray.class, myList);
         return null;
     }
 
-    private static Object recursiveSearch(String objectToReduceName, Object objectToReduceValue, String requestedName, Class requestedObjectType) {
+
+    //TODO. Work on the myList functionality, in order to search for multiple instances of an object.
+    // So far have only started this part of the code. Did not finish this yet.
+    private static Object recursiveSearch(String objectToReduceName,
+                                          Object objectToReduceValue,
+                                          String requestedName,
+                                          Class requestedObjectType,
+                                          ArrayList<Object> myList
+    ) {
         if (objectToReduceValue == null) {
             return null;
         } else if (objectToReduceValue.getClass() == JSONArray.class) {
             //Then we have a JSONArray. Is it one without a name?
             if (requestedName == null){
-
+                JSONArray jsonArray = (JSONArray) objectToReduceValue;
+                myList.add(jsonArray);
             }
             //Then we have a JSONArray with a name. Is this what we wanted to return?
             if (requestedName.equals(objectToReduceName) && objectToReduceValue.getClass() == requestedObjectType) {
@@ -110,7 +120,7 @@ public class JSONSearch {
             JSONArray jsonArray = (JSONArray) objectToReduceValue;
             for (int i = 0; i < jsonArray.length(); i++) {
                 Object tempObject = jsonArray.get(i);
-                Object nullableValue = recursiveSearch(null, tempObject, requestedName, requestedObjectType);
+                Object nullableValue = recursiveSearch(null, tempObject, requestedName, requestedObjectType, myList);
                 if (nullableValue != null) {
                     return nullableValue;
                 }
@@ -129,7 +139,7 @@ public class JSONSearch {
                 //Get whatever is inside the JSONObject, and call the search method again.
                 String name = (String) names.get(i);
                 Object value = values.get(i);
-                Object nullableValue = recursiveSearch(name, value, requestedName, requestedObjectType);
+                Object nullableValue = recursiveSearch(name, value, requestedName, requestedObjectType, myList);
                 if (nullableValue != null) {
                     return nullableValue;
                 }

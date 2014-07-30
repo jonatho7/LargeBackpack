@@ -8,6 +8,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 public class JSONSearchUsage {
     public static void main(String[] args) throws Exception {
@@ -62,6 +63,9 @@ public class JSONSearchUsage {
 
         Boolean bool = JSONSearch.searchForBoolean(json, "simple");
         System.out.println("Boolean = " + bool);
+
+        ArrayList<Object> myList = JSONSearch.searchForJSONArrays(json);
+        System.out.println(myList.toArray());
 
     }
 
