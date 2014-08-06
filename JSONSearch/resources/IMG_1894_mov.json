@@ -1,5 +1,19 @@
 {
+    "answer": true,
+    "rotate": 180,
+    "objective": {
+        "hosh": 80,
+        "posh": 90
+    },
     "streams": [
+        {
+            "mine": 50,
+            "objective": {
+                "mine": "fine",
+                "yours": "horrible",
+                "rotate": "Cool"
+            }
+        },
         {
             "index": 0,
             "codec_name": "aac",
@@ -33,7 +47,13 @@
                 "hearing_impaired": 0,
                 "visual_impaired": 0,
                 "clean_effects": 0,
-                "attached_pic": 0
+                "attached_pic": 0,
+                "rotate": {
+                    "fine": true,
+                    "rotate": [
+                        false
+                    ]
+                }
             },
             "tags": {
                 "creation_time": "2014-07-16 19:44:16",
@@ -57,6 +77,7 @@
             "display_aspect_ratio": "0:1",
             "pix_fmt": "yuv420p",
             "level": 31,
+            "rotate": 90,
             "r_frame_rate": "24/1",
             "avg_frame_rate": "24/1",
             "time_base": "1/600",
@@ -69,6 +90,7 @@
             "disposition": {
                 "default": 1,
                 "dub": 0,
+                "rotate": 20,
                 "original": 0,
                 "comment": 0,
                 "lyrics": 0,
@@ -85,9 +107,25 @@
                 "language": "und",
                 "handler_name": "Core Media Data Handler"
             }
-        }
+        },
+        [
+            500,
+            200
+        ],
+        [
+            "funny",
+            "lucky"
+        ]
+    ],
+    "cool": [
+        100,
+        150
     ],
     "format": {
+        "cool": [
+            "wow",
+            "awe"
+        ],
         "filename": "/Users/jon.hellmann/Documents/videos/jonsPhone/IMG_1894.mov",
         "nb_streams": 2,
         "nb_programs": 0,
@@ -96,8 +134,11 @@
         "start_time": "0.000000",
         "duration": "3.675000",
         "size": "976283",
+        "profile": "Ultimate",
+        "rotate": 90.543,
         "bit_rate": "2125241",
         "probe_score": 100,
+        "answer": false,
         "tags": {
             "major_brand": "qt  ",
             "minor_version": "0",
@@ -111,9 +152,11 @@
             "date-eng": "2014-07-11T13:22:11-0400",
             "location": "+38.9216-077.2270+150.568/",
             "location-eng": "+38.9216-077.2270+150.568/",
+            "profile": "Superior",
             "model": "iPhone 5",
             "model-eng": "iPhone 5",
-            "simple": true
+            "answer": true,
+            "rotate": true
         }
     }
 }
