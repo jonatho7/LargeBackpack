@@ -1,0 +1,5 @@
+Previous code had public getters and setters, and no access modifier
+for instance variables. With no access modifier, the instance variables
+would be visible to that particular class, and other classes in the
+package. The instance variables would not be visible to subclasses and
+classes in other packages.
