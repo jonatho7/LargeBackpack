@@ -1,3 +1,5 @@
+package testWildcards;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +10,7 @@ public class TestUsingWildcards {
         getRows(myList);
     }
 
-    //Use of wildcards in this method. Can pass in a List<> with any type that extends HomeTableRows.
+    //Use of wildcards in this method. Can pass in a List<> with any type that extends testWildcards.HomeTableRows.
     public static void getRows(List<? extends HomeTableRows> myList){
 
     }
