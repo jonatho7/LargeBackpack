@@ -18,12 +18,12 @@
         <dependency>
             <groupId>org.securegraph</groupId>
             <artifactId>securegraph-core</artifactId>
-            <version>${securegraph.version}</version>
+            <version>0.7.0</version>
         </dependency>
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
-            <version>${json.version}</version>
+            <version>20140107</version>
         </dependency>
         <dependency>
             <groupId>com.drewnoakes</groupId>

@@ -4,7 +4,7 @@ public class TestCallingMethodOnNullPointer {
         System.out.println("Hello");
 
         //The next line causes a NullPointerException.
-        myMethod().toString();
+        //myMethod().toString();
 
     }
 
